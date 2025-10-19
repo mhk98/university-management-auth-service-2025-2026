@@ -22,7 +22,7 @@ const createSemester = catchAsync(async (req:Request, res:Response, next:NextFun
         }
       )
 
-        next()
+        // next()
   
 })
 
@@ -47,7 +47,7 @@ const getAllSemester = catchAsync(async(req, res, next) => {
         }
       )
 
-      next()
+      // next()
 
 
 })

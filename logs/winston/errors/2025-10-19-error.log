@@ -1,0 +1,9 @@
+[2025-10-19 23:09:11] ERROR: Error connecting to MongoDB: bad auth : authentication failed
+[2025-10-19 23:11:45] ERROR: Error connecting to MongoDB: bad auth : authentication failed
+[2025-10-19 23:12:45] ERROR: Error connecting to MongoDB: bad auth : authentication failed
+[2025-10-19 23:13:08] ERROR: Error connecting to MongoDB: bad auth : authentication failed
+[2025-10-19 23:14:25] ERROR: Error connecting to MongoDB: bad auth : authentication failed
+[2025-10-19 23:18:47] ERROR: Error connecting to MongoDB: Cannot read properties of undefined (reading 'listen')
+[2025-10-19 23:19:39] ERROR: Error connecting to MongoDB: Cannot read properties of undefined (reading 'listen')
+[2025-10-19 23:23:56] ERROR: Error connecting to MongoDB: Cannot read properties of undefined (reading 'listen')
+[2025-10-19 23:27:31] ERROR: Unhandled Promise Rejection
