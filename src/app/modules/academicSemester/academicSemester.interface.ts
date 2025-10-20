@@ -27,7 +27,7 @@ export type IAcademicSemester = {
 }
 
 export type IAcademicSemesterFilter = {
-  searchTerm: string
+  searchTerm?: string
 }
 
 

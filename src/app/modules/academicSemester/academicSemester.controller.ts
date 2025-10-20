@@ -1,26 +1,25 @@
 import {  NextFunction, Request, RequestHandler, Response } from 'express';
 import { AcademicSemesterService } from './academicSemester.service';
 import catchAsync from '../../../shared/catchAsync';
-import sendResponse from '../../../shared/sendResponse';
 import status from 'http-status';
-import { paginationFields } from '../../../constants/pagination';
 import pick from '../../../shared/pick';
 import { IAcademicSemester } from './academicSemester.interface';
+import { academicSemesterFilterableFields } from './academicSemester.constant';
+import { paginationFields } from '../../../constants/pagination';
+import sendResponse from '../../../shared/sendResponse';
 
 
 
-const createSemester = catchAsync(async (req:Request, res:Response, next:NextFunction) => {
-   
-        const result = await AcademicSemesterService.createSemester(req.body);
+const createSemester = catchAsync(async (req:Request, res:Response) => {
+    const { ...academicSemesterData } = req.body;
+        const result = await AcademicSemesterService.createSemester(academicSemesterData);
 
-      sendResponse<IAcademicSemester>(res, 
-        {
+      sendResponse<IAcademicSemester>(res, {
             statusCode: status.OK,
             success: true,
             message: 'Semester created successfully',
             data: result,
-        }
-      )
+        });
 
         // next()
   
@@ -31,7 +30,7 @@ const getAllSemester = catchAsync(async(req, res, next) => {
 
     const paginationOptions = pick(req.query, paginationFields)
 
-    const filters = pick(req.query, ['searchTerm'])
+    const filters = pick(req.query, academicSemesterFilterableFields)
 
     console.log(paginationOptions)
 
