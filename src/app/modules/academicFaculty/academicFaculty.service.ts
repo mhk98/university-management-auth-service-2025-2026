@@ -3,9 +3,9 @@ import ApiError from "../../../errors/ApiError";
 import { paginationHelpers } from "../../../helpers/paginationHelper";
 import { IGenericResponse } from "../../../interfaces/common";
 import { IPaginationOptions } from "../../../interfaces/pagination";
-import { academicSemesterSearchableFields, academicSemesterTitleCodeMapper } from "./academicSemester.constant";
-import { IAcademicSemester, IAcademicSemesterFilter } from "./academicSemester.interface";
-import { AcademicSemester } from "./academicSemester.model";
+import { academicSemesterSearchableFields, academicSemesterTitleCodeMapper } from "./academicFaculty.constant";
+import { IAcademicSemester, IAcademicSemesterFilter } from "./academicFaculty.interface";
+import { AcademicSemester } from "./academicFaculty.model";
 import status from "http-status";
 
 const createSemester = async(payload: IAcademicSemester): Promise<IAcademicSemester> => {

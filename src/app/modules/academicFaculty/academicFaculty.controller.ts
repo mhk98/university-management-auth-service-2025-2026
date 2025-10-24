@@ -1,10 +1,10 @@
 import {  NextFunction, Request, RequestHandler, Response } from 'express';
-import { AcademicSemesterService } from './academicSemester.service';
+import { AcademicSemesterService } from './academicFaculty.service';
 import catchAsync from '../../../shared/catchAsync';
 import status from 'http-status';
 import pick from '../../../shared/pick';
-import { IAcademicSemester } from './academicSemester.interface';
-import { academicSemesterFilterableFields } from './academicSemester.constant';
+import { IAcademicSemester } from './academicFaculty.interface';
+import { academicSemesterFilterableFields } from './academicFaculty.constant';
 import { paginationFields } from '../../../constants/pagination';
 import sendResponse from '../../../shared/sendResponse';
 
