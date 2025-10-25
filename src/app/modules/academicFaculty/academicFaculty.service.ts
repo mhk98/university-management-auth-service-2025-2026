@@ -3,20 +3,17 @@ import ApiError from "../../../errors/ApiError";
 import { paginationHelpers } from "../../../helpers/paginationHelper";
 import { IGenericResponse } from "../../../interfaces/common";
 import { IPaginationOptions } from "../../../interfaces/pagination";
-import { academicSemesterSearchableFields, academicSemesterTitleCodeMapper } from "./academicFaculty.constant";
-import { IAcademicSemester, IAcademicSemesterFilter } from "./academicFaculty.interface";
-import { AcademicSemester } from "./academicFaculty.model";
-import status from "http-status";
+import { IAcademicFaculty, IAcademicFacultyFilter } from "./academicFaculty.interface";
+import { academicFacultySearchableFields } from "./academicFaculty.constant";
+import { AcademicFaculty } from "./academicFaculty.model";
 
-const createSemester = async(payload: IAcademicSemester): Promise<IAcademicSemester> => {
-   if(academicSemesterTitleCodeMapper[payload.title] !== payload.code){
-    throw new ApiError(status.BAD_REQUEST, 'Invalid semester code! Please check your input')
-   }
-    const result = await AcademicSemester.create(payload)
+const createFaculty = async(payload: IAcademicFaculty): Promise<IAcademicFaculty> => {
+ 
+    const result = await AcademicFaculty.create(payload)
     return result;
 }
 
-const getAllSemester = async( filters: IAcademicSemesterFilter, paginationOptions:IPaginationOptions): Promise<IGenericResponse<IAcademicSemester[]>> => {
+const getAllFaculty = async( filters: IAcademicFacultyFilter, paginationOptions:IPaginationOptions): Promise<IGenericResponse<IAcademicFaculty[]>> => {
 
     // const {page = 1, limit=10} = paginationOptions;
     // const skip = (page-1)*limit;
@@ -27,7 +24,7 @@ const getAllSemester = async( filters: IAcademicSemesterFilter, paginationOption
 
     if(searchTerm) {
         andConditions.push({
-           $or: academicSemesterSearchableFields.map((field) => ({
+           $or: academicFacultySearchableFields.map((field) => ({
                 [field]: {
                     $regex:searchTerm,
                     $options:'i'
@@ -81,9 +78,9 @@ const getAllSemester = async( filters: IAcademicSemesterFilter, paginationOption
         }
 
         const whereConditions = andConditions.length > 0 ? {$and: andConditions} : {}
-    const result = await AcademicSemester.find(whereConditions).sort(sortConditions).skip(skip).limit(limit)
+    const result = await AcademicFaculty.find(whereConditions).sort(sortConditions).skip(skip).limit(limit)
 
-    const total = await AcademicSemester.countDocuments()
+    const total = await AcademicFaculty.countDocuments()
 
     return {
         meta: {
@@ -96,28 +93,25 @@ const getAllSemester = async( filters: IAcademicSemesterFilter, paginationOption
 }
 
 
-const getSingleSemester = async(id:string) => {
+const getSingleFaculty = async(id:string) => {
 
-    const result = await AcademicSemester.findById(id)
-
-    return result
-
-}
-
-const updatedSemester = async(id:string, payload: Partial<IAcademicSemester>):Promise<IAcademicSemester | null> => {
-
-     if(payload.title && payload.code && academicSemesterTitleCodeMapper[payload.title] !== payload.code){
-    throw new ApiError(status.BAD_REQUEST, 'Invalid semester code! Please check your input')
-   }
-    const result = await AcademicSemester.findOneAndUpdate({_id:id}, payload, {new: true})
+    const result = await AcademicFaculty.findById(id)
 
     return result
 
 }
 
-export const AcademicSemesterService = {
-    createSemester,
-    getAllSemester,
-    getSingleSemester,
-    updatedSemester
+const updatedFaculty = async(id:string, payload: Partial<IAcademicFaculty>):Promise<IAcademicFaculty | null> => {
+
+    const result = await AcademicFaculty.findOneAndUpdate({_id:id}, payload, {new: true})
+
+    return result
+
+}
+
+export const AcademicFacultyService = {
+    createFaculty,
+    getAllFaculty,
+    getSingleFaculty,
+    updatedFaculty
 }
