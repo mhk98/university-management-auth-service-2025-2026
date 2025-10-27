@@ -36,7 +36,7 @@ export default tseslint.config(js.configs.recommended, {
   //   quotes: ['error', 'single'],
   // },
 
-   rules: {
+  rules: {
     // Turn off base rules & use TS-aware versions
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': ['error'],
@@ -46,10 +46,13 @@ export default tseslint.config(js.configs.recommended, {
     'no-unreachable': 'error',
 
     '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
-    '@typescript-eslint/quotes': ['error', 'single'],
-    "@typescript-eslint/explicit-module-boundary-types": "error",
-  "@typescript-eslint/explicit-function-return-type": "error",
+    // '@typescript-eslint/quotes': ['error', 'single'],
+    quotes: ['error', 'double'],
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    //   "@typescript-eslint/explicit-module-boundary-types": "error",
+    // "@typescript-eslint/explicit-function-return-type": "error",
 
     semi: ['error', 'always'],
-  }
+  },
 })
