@@ -6,6 +6,7 @@ import { Application } from 'express'
 import globalErrorHandler from './middlewares/globalErrorHandler'
 import routes from './app/routes'
 import status from 'http-status'
+import { generateFacultyId, generateStudentId } from './app/modules/user/user.utils'
 
 app.use(cors())
 
@@ -33,4 +34,13 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
   })
 })
 
+
+
+
+const testId = async() => {
+  const testId = await generateFacultyId()
+console.log(testId)
+}
+
+testId()
 export default app

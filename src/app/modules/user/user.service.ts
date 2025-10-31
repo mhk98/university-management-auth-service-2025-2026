@@ -1,7 +1,8 @@
 import config from '../../../config';
 import { IUser } from './user.interface';
 import { User } from './user.model';
-import { generateUserId } from './user.utils';
+import { generateFacultyId, generateStudentId } from './user.utils';
+
 
 
 const createUser = async(user:IUser): Promise<IUser | null> => {
@@ -9,7 +10,8 @@ const createUser = async(user:IUser): Promise<IUser | null> => {
     //Automatically generate an ID if not provided
     //Default password handling can be added later
 
-    const id = await generateUserId();
+ 
+    const id = await generateFacultyId();
     user.id = id;
     
     if(!user.password){
