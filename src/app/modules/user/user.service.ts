@@ -12,6 +12,9 @@ const createUser = async(user:IUser): Promise<IUser | null> => {
 
  
     const id = await generateFacultyId();
+    if (!id) {
+        throw new Error('Failed to generate user id');
+    }
     user.id = id;
     
     if(!user.password){
@@ -19,7 +22,7 @@ const createUser = async(user:IUser): Promise<IUser | null> => {
     }
     const createdUser = await User.create(user);
 
-    if(!createUser){
+    if(!createdUser){
         throw new Error('Failed to create user');
     }
 
