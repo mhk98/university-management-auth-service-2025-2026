@@ -1,4 +1,4 @@
-import { InferRawDocType, Model, Schema, model } from 'mongoose';
+import { InferRawDocType, Model } from 'mongoose';
 import { studentSchema } from './student.model';
 
 export type IStudent = InferRawDocType<typeof studentSchema>;
