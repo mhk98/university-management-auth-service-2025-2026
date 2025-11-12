@@ -1,33 +1,85 @@
-import { IAcademicSemester } from '../academicSemester/academicSemester.interface';
-import { User } from './user.model';
-export const findLastStudentId = async() => {
-    const lastStudent = await User.findOne({role:'student'}, {id:1, _id:0}).sort({createdAt:-1}).lean();
-return lastStudent ?.id ? lastStudent.id.substring(4): undefined;
-};
+// import { IAcademicSemester } from '../academicSemester/academicSemester.interface';
+// import { User } from './user.model';
 
-export const generateStudentId = async(academicSemester:IAcademicSemester) => {
-    const currentId = await findLastStudentId() || (0).toString().padStart(5, '0');
-    // return currentId ;
+// export const findLastStudentId = async() => {
+//     const lastStudent = await User.findOne({role:'student'}, {id:1, _id:0}).sort({createdAt:-1}).lean();
+// return lastStudent ?.id ? lastStudent.id.substring(4): undefined;
+// };
 
-    let incrementedId = (parseInt(currentId) + 1).toString().padStart(5, '0');
-   
-   incrementedId = `${academicSemester.year.substring(2)}${academicSemester.code}${incrementedId}`
+// export const generateStudentId = async(academicSemester:IAcademicSemester | null) => {
 
-    return incrementedId;
-   
-};
+//     if (!academicSemester) {
+//     throw new Error("Academic semester not found");
+//   }
 
+//     const currentId = await findLastStudentId() || (0).toString().padStart(5, '0');
+//     // return currentId ;
 
-export const findLastFacultyId = async():Promise<string | undefined> => {
-    const lastFaculty = await User.findOne({role:'faculty'}, {id:1, _id:0}).sort({createdAt: -1}).lean();
-    return lastFaculty?.id? lastFaculty.id.substring(2) : undefined;
+//     let incrementedId = (parseInt(currentId) + 1).toString().padStart(5, '0');
 
+//    incrementedId = `${academicSemester.year.substring(2)}${academicSemester.code}${incrementedId}`
+
+//     return incrementedId;
+
+// };
+
+// export const findLastFacultyId = async():Promise<string | undefined> => {
+//     const lastFaculty = await User.findOne({role:'faculty'}, {id:1, _id:0}).sort({createdAt: -1}).lean();
+//     return lastFaculty?.id? lastFaculty.id.substring(2) : undefined;
+
+// }
+
+// export const generateFacultyId = async():Promise<string | undefined> => {
+//     const currentId = await findLastFacultyId() || (0).toString().padStart(5, '0');
+//     let incrementedId = (parseInt(currentId) + 1).toString().padStart(5, '0');
+//     incrementedId = `F-${incrementedId}`;
+
+//     return incrementedId;
+// }
+
+import { IAcademicSemester } from '../academicSemester/academicSemester.interface'
+import { User } from './user.model'
+
+export const findLastStudentId = async (): Promise<string | undefined> => {
+  const lastStudent = await User.findOne({ role: 'student' }, { id: 1, _id: 0 })
+    .sort({ createdAt: -1 })
+    .lean()
+
+  return lastStudent?.id ? lastStudent.id.substring(4) : undefined
 }
 
-export const generateFacultyId = async():Promise<string | undefined> => {
-    const currentId = await findLastFacultyId() || (0).toString().padStart(5, '0');
-    let incrementedId = (parseInt(currentId) + 1).toString().padStart(5, '0');
-    incrementedId = `F-${incrementedId}`;
+export const generateStudentId = async (
+  academicSemester: IAcademicSemester | null,
+): Promise<string> => {
+  if (!academicSemester) {
+    throw new Error('Academic semester not found')
+  }
 
-    return incrementedId;
+  const currentId =
+    (await findLastStudentId()) || (0).toString().padStart(5, '0')
+
+  let incrementedId = (parseInt(currentId) + 1).toString().padStart(5, '0')
+
+  incrementedId = `${academicSemester.year.substring(2)}${academicSemester.code}${incrementedId}`
+
+  return incrementedId
+}
+
+export const findLastFacultyId = async (): Promise<string | undefined> => {
+  const lastFaculty = await User.findOne({ role: 'faculty' }, { id: 1, _id: 0 })
+    .sort({ createdAt: -1 })
+    .lean()
+
+  return lastFaculty?.id ? lastFaculty.id.substring(2) : undefined
+}
+
+export const generateFacultyId = async (): Promise<string> => {
+  const currentId =
+    (await findLastFacultyId()) || (0).toString().padStart(5, '0')
+
+  let incrementedId = (parseInt(currentId) + 1).toString().padStart(5, '0')
+
+  incrementedId = `F-${incrementedId}`
+
+  return incrementedId
 }

@@ -47,12 +47,12 @@ export default tseslint.config(js.configs.recommended, {
 
     '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
     // '@typescript-eslint/quotes': ['error', 'single'],
-    quotes: ['error', 'double', 'single'],
+    quotes: ['error', 'single'],
     // '@typescript-eslint/explicit-module-boundary-types': 'off',
     // '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'error',
     '@typescript-eslint/explicit-function-return-type': 'error',
 
-    semi: ['error', 'always'],
+    semi: ['error'],
   },
 })

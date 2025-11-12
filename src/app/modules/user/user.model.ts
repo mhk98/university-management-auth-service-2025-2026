@@ -1,6 +1,5 @@
-import { Schema, model, Model } from 'mongoose';
-import { IUser, UserModel } from './user.interface';
-
+import { Schema, model } from 'mongoose'
+import { IUser, UserModel } from './user.interface'
 
 // Optional: Define methods or statics later
 
@@ -19,7 +18,7 @@ const userSchema = new Schema<IUser>(
       type: String,
       required: true,
     },
-    student:{
+    student: {
       type: Schema.Types.ObjectId,
       ref: 'Student',
     },
@@ -38,6 +37,6 @@ const userSchema = new Schema<IUser>(
       virtuals: true,
     },
   },
-);
+)
 
-export const User = model<IUser, UserModel>('User', userSchema);
+export const User = model<IUser, UserModel>('User', userSchema)
