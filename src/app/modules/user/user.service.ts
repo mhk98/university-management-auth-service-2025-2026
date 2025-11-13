@@ -1,9 +1,13 @@
+import mongoose from 'mongoose'
 import config from '../../../config'
 import { AcademicSemester } from '../academicSemester/academicSemester.model'
 import { IStudent } from '../student/student.interface'
 import { IUser } from './user.interface'
 import { User } from './user.model'
 import { generateStudentId } from './user.utils'
+import ApiError from '../../../errors/ApiError'
+import status from 'http-status'
+import { Student } from '../student/student.model'
 
 const createStudent = async (
   student: IStudent,
@@ -29,15 +33,42 @@ const createStudent = async (
   )
 
   //generate student id
-  // const id =
-  await generateStudentId(academicSemester)
-  const createdUser = await User.create(user)
 
-  if (!createdUser) {
-    throw new Error('Failed to create user')
+  const session = await mongoose.startSession()
+
+  try {
+    session.startTransaction()
+    const id = await generateStudentId(academicSemester)
+    if (!id) {
+      throw new ApiError(status.BAD_REQUEST, 'Failed to generate student id')
+    }
+
+    user.id = id
+    student.id = id
+
+    //array
+    const newStudent = await Student.create([student], { session })
+
+    if (!newStudent.length) {
+      throw new ApiError(status.BAD_REQUEST, 'Failed to create student')
+    }
+
+    //set student ----> _id into user.student
+    user.student = newStudent[0]._id
+
+    const newUser = await User.create([user], { session })
+
+    if (!newUser.length) {
+      throw new ApiError(status.BAD_REQUEST, 'Failed to create user')
+    }
+
+    await session.commitTransaction()
+    await session.endSession()
+  } catch (error) {
+    await session.abortTransaction()
+    await session.endSession()
+    throw error
   }
-
-  return createdUser
 }
 
 export const UserService = {
