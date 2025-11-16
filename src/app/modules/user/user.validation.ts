@@ -10,8 +10,8 @@ const createUserZodSchema = z.object({
         middleName: z.string().optional(),
         lastName: z.string({ message: 'Last name is required' }),
       }),
-    }),
-    gender: z.enum([...gender], {
+
+       gender: z.enum([...gender], {
       message: 'Gender is required',
     }),
     dateOfBirth: z.string({ message: 'Date of birth is required' }),
@@ -47,6 +47,8 @@ const createUserZodSchema = z.object({
       address: z.string({ message: 'Local guardian address is required' }),
     }),
     profileImage: z.string({ message: 'Profile image is required' }).optional(),
+    }),
+   
   }),
 })
 
