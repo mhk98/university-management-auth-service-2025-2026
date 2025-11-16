@@ -7,8 +7,8 @@ const createUserZodSchema = z.object({
     student: z.object({
       name: z.object({
         firstName: z.string({ message: 'First name is required' }),
-        lastName: z.string({ message: 'Last name is required' }),
         middleName: z.string().optional(),
+        lastName: z.string({ message: 'Last name is required' }),
       }),
     }),
     gender: z.enum([...gender], {

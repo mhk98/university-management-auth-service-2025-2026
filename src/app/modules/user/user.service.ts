@@ -13,15 +13,6 @@ const createStudent = async (
   student: IStudent,
   user: IUser,
 ): Promise<IUser | null> => {
-  //Automatically generate an ID if not provided
-  //Default password handling can be added later
-
-  // const id = await generateFacultyId();
-  // if (!id) {
-  //     throw new Error('Failed to generate user id');
-  // }
-  // user.id = id;
-
   if (!user.password) {
     user.password = config.default_student_pass as string
   }
@@ -33,6 +24,7 @@ const createStudent = async (
   )
 
   //generate student id
+  let newUserAllData = null
 
   const session = await mongoose.startSession()
 
@@ -62,6 +54,8 @@ const createStudent = async (
       throw new ApiError(status.BAD_REQUEST, 'Failed to create user')
     }
 
+    newUserAllData = newUser[0]
+
     await session.commitTransaction()
     await session.endSession()
   } catch (error) {
@@ -69,6 +63,27 @@ const createStudent = async (
     await session.endSession()
     throw error
   }
+
+  //user ----> student ------> academicSemester, academicDepartment, academicFaculty
+
+  if (newUserAllData) {
+    newUserAllData = await User.findOne({ id: newUserAllData.id }).populate({
+      path: 'student',
+      populate: [
+        {
+          path: 'academicSemester',
+        },
+        {
+          path: 'academicDepartment',
+        },
+        {
+          path: 'academicFaculty',
+        },
+      ],
+    })
+  }
+
+  return newUserAllData
 }
 
 export const UserService = {
