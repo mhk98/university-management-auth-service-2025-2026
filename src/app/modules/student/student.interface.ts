@@ -28,7 +28,7 @@ export type LocalGuardian = {
 
 export type IStudent = {
   id: string
-  name: UserName
+  name: UserName //embedded object
   gender: 'male' | 'female'
   dateOfBirth: string
   email: string
@@ -37,12 +37,21 @@ export type IStudent = {
   bloodGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-'
   presentAddress: string
   permanentAddress: string
-  guardian: Guardian
-  localGuardian: LocalGuardian
-  academicSemester: Types.ObjectId | IAcademicSemester
-  academicDepartment: Types.ObjectId | IAcademicDepartment
-  academicFaculty: Types.ObjectId | IAcademicFaculty
+  guardian: Guardian //embedded object
+  localGuardian: LocalGuardian //embedded object
+  academicSemester: Types.ObjectId | IAcademicSemester //reference _id
+  academicDepartment: Types.ObjectId | IAcademicDepartment //reference _id
+  academicFaculty: Types.ObjectId | IAcademicFaculty //reference _id
   profileImage?: string
 }
 
 export type StudentModel = Model<IStudent, Record<string, unknown>>
+
+export type IStudentFilter = {
+  searchTerm?: string
+  id?: string
+  bloodGroup?: string
+  email?: string
+  contactNo?: string
+  emergencyContactNo?: string
+}
