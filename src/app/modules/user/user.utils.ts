@@ -37,6 +37,7 @@
 //     return incrementedId;
 // }
 
+import { IAcademicDepartment } from '../academicDepartment/academicDepartment.interface'
 import { IAcademicSemester } from '../academicSemester/academicSemester.interface'
 import { User } from './user.model'
 
@@ -73,7 +74,11 @@ export const findLastFacultyId = async (): Promise<string | undefined> => {
   return lastFaculty?.id ? lastFaculty.id.substring(2) : undefined
 }
 
-export const generateFacultyId = async (): Promise<string> => {
+export const generateFacultyId = async (academicDepartment: IAcademicDepartment | null): Promise<string> => {
+
+  if(!academicDepartment){
+    throw new Error('Academic Department not found')
+  }
   const currentId =
     (await findLastFacultyId()) || (0).toString().padStart(5, '0')
 
