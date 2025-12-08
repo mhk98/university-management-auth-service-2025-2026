@@ -54,9 +54,37 @@ const getSingleFaculty = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+const updateFaculty = catchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const updatedData = req.body;
 
+  const result = await FacultyService.updateFaculty(id, updatedData);
+
+  sendResponse<IFaculty>(res, {
+    statusCode: status.OK,
+    success: true,
+    message: 'Faculty updated successfully',
+    data: result,
+  })
+})
+
+
+const deleteFaculty = catchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id;
+
+  const result = await FacultyService.deleteFaculty(id);
+
+  sendResponse<IFaculty>(res, {
+    statusCode: status.OK,
+    success: true,
+    message: 'Faculty deleted successfully',
+    data: result,
+  })
+})
 export const FacultyController = {
     createFaculty,
     getAllFaculty,
     getSingleFaculty,
+    updateFaculty,
+    deleteFaculty
 }

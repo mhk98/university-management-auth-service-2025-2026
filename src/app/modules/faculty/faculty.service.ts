@@ -177,8 +177,43 @@ const getSingleFaculty = async (id: string) => {
 
   return result
 }
+
+
+const updateFaculty = async (id: string, payload: Partial<IFaculty>): Promise<IFaculty | null> => {
+const isExist = await Faculty.findOne({id})
+
+if(!isExist){
+    throw new ApiError(status.NOT_FOUND, 'Faculty not found')
+}
+
+const {name, ...facultyData} =  payload;
+
+const updateFacultyData: Partial<IFaculty>  = {...facultyData}
+
+
+if(name && Object.keys(name).length > 0) {
+    Object.keys(name).forEach(key => {
+        const nameKey = `name.${key}`;
+        (updateFacultyData as any)[nameKey] = name[key as keyof typeof name]
+    })
+}
+
+const result = await Faculty.findOneAndUpdate({id}, updateFacultyData, 
+    {new: true}
+)
+
+return result;
+}
+
+
+const deleteFaculty = async(id: string) => {
+    const result = await Faculty.findByIdAndDelete(id);
+    return result;
+}
 export const FacultyService = {
     createFaculty,
     getAllFaculty,
     getSingleFaculty,
+    updateFaculty,
+    deleteFaculty
 }
