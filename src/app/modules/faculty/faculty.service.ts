@@ -208,6 +208,7 @@ const deleteFaculty = async (id: string) => {
   const result = await Faculty.findByIdAndDelete(id)
   return result
 }
+
 export const FacultyService = {
   createFaculty,
   getAllFaculty,

@@ -4,6 +4,9 @@ import status from 'http-status'
 import catchAsync from '../../../shared/catchAsync'
 import { ManagementDepartmentSerivce } from './managementDepartment.service'
 import { IManagementDepartment } from './managementDepartment.interface'
+import { paginationFields } from '../../../constants/pagination'
+import { managementDepartmentFilterableFields } from './managementDepartment.constant'
+import pick from '../../../shared/pick'
 
 const createManagementDepartment = catchAsync(
   async (req: Request, res: Response) => {
@@ -21,22 +24,23 @@ const createManagementDepartment = catchAsync(
   },
 )
 
-// const getAllManagementDepartment = catchAsync(async (req:Request, res:Response) => {
-//     const paginationOptions = pick(req.query, paginationFields)
-//     const filters = pick(req.query, managementDepartmentFilterableFields)
+const getAllManagementDepartment = catchAsync(async (req:Request, res:Response) => {
+    const paginationOptions = pick(req.query, paginationFields)
+    const filters = pick(req.query, managementDepartmentFilterableFields)
 
-//    await ManagementDepartmentSerivce.getAllManagementDepartment(filters, paginationOptions)
+ const result = await ManagementDepartmentSerivce.getAllManagementDepartment(filters, paginationOptions)
 
-//     sendResponse<IManagementDepartment[]>(res, {
-//         statusCode: status.OK,
-//         success: true,
-//         message: 'Management Departments retrieved successfully',
-//         meta: result.meta,
-//         data: result.data,
+    sendResponse<IManagementDepartment[]>(res, {
+        statusCode: status.OK,
+        success: true,
+        message: 'Management Departments retrieved successfully',
+        // meta: result.meta,
+        // data: result.data,
 
-//     })
-// })
+    })
+})
 
 export const ManagementDepartmentController = {
   createManagementDepartment,
+  getAllManagementDepartment
 }
