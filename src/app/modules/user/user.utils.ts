@@ -39,6 +39,7 @@
 
 import { IAcademicDepartment } from '../academicDepartment/academicDepartment.interface'
 import { IAcademicSemester } from '../academicSemester/academicSemester.interface'
+import { IManagementDepartment } from '../managementDepartment/managementDepartment.interface'
 import { User } from './user.model'
 
 export const findLastStudentId = async (): Promise<string | undefined> => {
@@ -86,6 +87,29 @@ export const generateFacultyId = async (
   let incrementedId = (parseInt(currentId) + 1).toString().padStart(5, '0')
 
   incrementedId = `F-${incrementedId}`
+
+  return incrementedId
+}
+
+export const findLastAdminId = async (): Promise<string | undefined> => {
+  const lastAdmin = await User.findOne({ role: 'admin' }, { id: 1, _id: 0 })
+    .sort({ createdAt: -1 })
+    .lean()
+  return lastAdmin?.id ? lastAdmin.id.substring(2) : undefined
+}
+
+export const generateAdminId = async (
+  managementDepartment: IManagementDepartment,
+): Promise<string> => {
+  if (!managementDepartment) {
+    throw new Error('Management Department not found')
+  }
+
+  const currentId = (await findLastAdminId()) || (0).toString().padStart(5, '0')
+
+  let incrementedId = (parseInt(currentId) + 1).toString().padStart(5, '0')
+
+  incrementedId = `A-${incrementedId}`
 
   return incrementedId
 }

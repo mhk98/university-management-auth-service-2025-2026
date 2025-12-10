@@ -86,6 +86,44 @@ const createStudent = async (
   return newUserAllData
 }
 
+// const createAdmin = async (admin:IAdmin, user:IUser) => {
+
+//   if(!user.password){
+//     user.password = config.default_admin_pass as string
+//   }
+
+//   user.role = 'admin';
+
+//   const managementDepartment = await ManagementDepartment.findById(
+//     admin.managementDepartment
+//   );
+
+//   let newUserAllData = null;
+
+//   const session = await sessionStorage.startSession();
+
+//   try {
+//     session.startTransaction()
+
+//     const id = await generateAdminId(managementDepartment)
+
+//     if(!id){
+//       throw new ApiError(status.BAD_REQUEST, 'Failed to generate admin id');
+//     }
+
+//     user.id = id;
+//     admin.id = id;
+
+//     const newAdmin = await Admin.create([admin], {session})
+
+//     if(!newAdmin.length){
+//       throw new ApiError(status.BAD_REQUEST, 'Failed to create admin');
+//     }
+//   } catch (error) {
+
+//   }
+// }
+
 export const UserService = {
   createStudent,
 }

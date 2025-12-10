@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose'
+import { model, Schema } from 'mongoose'
 import { AdminModel, IAdmin } from './admin.interface'
 
 export const adminSchema = new Schema<IAdmin, AdminModel>(
@@ -58,3 +58,5 @@ export const adminSchema = new Schema<IAdmin, AdminModel>(
     timestamps: true,
   },
 )
+
+export const Admin = model<IAdmin, AdminModel>('Admin', adminSchema)
