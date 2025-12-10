@@ -99,7 +99,7 @@ export const findLastAdminId = async (): Promise<string | undefined> => {
 }
 
 export const generateAdminId = async (
-  managementDepartment: IManagementDepartment,
+  managementDepartment: IManagementDepartment | null,
 ): Promise<string> => {
   if (!managementDepartment) {
     throw new Error('Management Department not found')
