@@ -1,11 +1,9 @@
 import z from 'zod'
 import { bloodGroups, gender } from './faculty.constant'
 
-const createFacultyZodSchema = z.object({
+const updateFacultyZodSchema = z.object({
   body: z.object({
-    password: z.string().optional(),
-    faculty: z.object({
-      name: z.object({
+   name: z.object({
         firstName: z.string().optional(),
         lastName: z.string().optional(),
         middleName: z.string().optional(),
@@ -20,10 +18,9 @@ const createFacultyZodSchema = z.object({
       bloodGroup: z.enum([...bloodGroups]).optional(),
       designation: z.string().optional(),
       profileImage: z.string().optional(),
-    }),
   }),
 })
 
 export const FacultyValidation = {
-  createFacultyZodSchema,
+  updateFacultyZodSchema,
 }

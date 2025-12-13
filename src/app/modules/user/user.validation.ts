@@ -59,6 +59,31 @@ const createUserZodSchema = z.object({
   }),
 })
 
+
+const createFacultyZodSchema = z.object({
+  body: z.object({
+    password: z.string().optional(),
+    faculty: z.object({
+      name: z.object({
+        firstName: z.string().optional(),
+        lastName: z.string().optional(),
+        middleName: z.string().optional(),
+      }),
+      gender: z.enum([...gender]).optional(),
+      dateofBirth: z.string().optional(),
+      email: z.string().email().optional(),
+      contactNo: z.string().optional(),
+      emergencyContactNo: z.string().optional(),
+      presentAddress: z.string().optional(),
+      permanentAddress: z.string().optional(),
+      bloodGroup: z.enum([...bloodGroups]).optional(),
+      designation: z.string().optional(),
+      profileImage: z.string().optional(),
+    }),
+  }),
+})
+
+
 const createAdminZodSchema = z.object({
   body: z.object({
     password: z.string().optional(),
@@ -81,6 +106,8 @@ const createAdminZodSchema = z.object({
       bloodGroup: z.enum([...bloodGroups]).optional(),
       presentAddress: z.string({ message: 'Present address is required' }),
       permanentAddress: z.string({ message: 'Permanent address is required' }),
+      designation: z.string({ message: 'Designation is required' }),
+
       managementDepartment: z.string({
         message: 'Management department is required',
       }),
@@ -94,4 +121,5 @@ const createAdminZodSchema = z.object({
 export const UserValidation = {
   createUserZodSchema,
   createAdminZodSchema,
+  createFacultyZodSchema
 }

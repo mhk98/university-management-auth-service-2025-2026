@@ -20,9 +20,23 @@ const createStudent: RequestHandler = catchAsync(
   },
 )
 
+const createFaculty = catchAsync(async (req: Request, res: Response) => {
+  const { faculty, ...userData } = req.body
+
+  const result = await UserService.createFaculty(faculty, userData)
+
+  res.status(201).json({
+    success: true,
+    message: 'Faculty created successfully',
+    data: result,
+  })
+})
+
 const createAdmin = catchAsync(async (req: Request, res: Response) => {
   const {admin, ...userData} = req.body;
 
+  console.log("admin", admin)
+  console.log("userData", userData)
   const result = await UserService.createAdmin(admin, userData)
 
   sendResponse<IUser>(res, {
@@ -35,5 +49,6 @@ const createAdmin = catchAsync(async (req: Request, res: Response) => {
 
 export const UserController = {
   createStudent,
+  createFaculty,
   createAdmin
 }

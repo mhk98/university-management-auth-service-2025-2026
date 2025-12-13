@@ -8,17 +8,7 @@ import { IFaculty } from './faculty.interface'
 import status from 'http-status'
 import sendResponse from '../../../shared/sendResponse'
 
-const createFaculty = catchAsync(async (req: Request, res: Response) => {
-  const { faculty, ...userData } = req.body
 
-  const result = await FacultyService.createFaculty(faculty, userData)
-
-  res.status(201).json({
-    success: true,
-    message: 'Faculty created successfully',
-    data: result,
-  })
-})
 
 const getAllFaculty = catchAsync(async (req, res) => {
   const paginationOptions = pick(req.query, paginationFields)
@@ -75,7 +65,6 @@ const deleteFaculty = catchAsync(async (req: Request, res: Response) => {
   })
 })
 export const FacultyController = {
-  createFaculty,
   getAllFaculty,
   getSingleFaculty,
   updateFaculty,
