@@ -23,6 +23,8 @@ export type IAdmin = {
   managementDepartment: Types.ObjectId | IManagementDepartment
 }
 
+export type AdminModel = Model<IAdmin, Record<string, unknown>>
+
 export type IAdminFilter = {
 searchTerm?: string,
   id?: string,
@@ -31,5 +33,3 @@ searchTerm?: string,
   contactNo?: string,
   emergencyContactNo?: string,
 }
-
-export type AdminModel = Model<IAdmin, Record<string, unknown>>

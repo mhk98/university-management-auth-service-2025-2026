@@ -45,8 +45,8 @@ const userSchema = new Schema<IUser, Record<string, never>, UserMethods>(
   },
 )
 
-userSchema.methods.isUserExist = async function (id:string): Promise<Partial<IUser> | null> {
-const user = await User.findOne ({id}, {id:1, needsPasswordChange:1}).lean();
+userSchema.methods.isUserExist = async function (id:string): Promise<Pick<IUser, 'id' | 'password' | 'role' | 'needsPasswordChange'> | null> {
+const user = await User.findOne ({id}, {id:1, role:1, needsPasswordChange:1}).lean();
 
 return user
 }

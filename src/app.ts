@@ -7,9 +7,11 @@ import globalErrorHandler from './middlewares/globalErrorHandler'
 import routes from './app/routes'
 import status from 'http-status'
 // import { generateFacultyId, generateStudentId } from './app/modules/user/user.utils'
+import cookieParser from 'cookie-parser'
 
 app.use(cors())
 
+app.use(cookieParser())
 //parser
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))

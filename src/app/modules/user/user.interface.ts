@@ -24,7 +24,7 @@ export type IUser = {
 
 
 export interface UserMethods {
-  isUserExist(id: string): Promise<Partial<IUser> | null>;
+  isUserExist(id: string): Promise<Pick<IUser, 'id' | 'password' | 'role' | 'needsPasswordChange'> | null>;
   isPasswordMatch(
     givenPassword: string,
     savedPassword: string

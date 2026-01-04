@@ -11,6 +11,9 @@ import sendResponse from '../../../shared/sendResponse'
 
 
 const getAllFaculty = catchAsync(async (req, res) => {
+
+  console.log(req.headers.authorization)
+  console.log(req.user)
   const paginationOptions = pick(req.query, paginationFields)
 
   const filters = pick(req.query, facultyFilterableFields)

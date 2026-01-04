@@ -234,8 +234,9 @@ const createAdmin = async (admin:IAdmin, user:IUser) => {
   return newUserAllData
 }
 
+
 export const UserService = {
   createStudent,
   createFaculty,
-  createAdmin
+  createAdmin,
 }
